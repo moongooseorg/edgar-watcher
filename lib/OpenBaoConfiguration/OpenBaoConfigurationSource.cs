@@ -39,14 +39,12 @@ public sealed class OpenBaoConfigurationProvider(OpenBaoConfigurationSource sour
 
         VaultClientSettings settings = new(source.Address, auth);
 
-#if DEBUG
         settings.PostProcessHttpClientHandlerAction = handler =>
         {
             if (handler is HttpClientHandler clientHandler)
                 clientHandler.ServerCertificateCustomValidationCallback =
                     HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
         };
-#endif
 
         IVaultClient client = new VaultClient(settings);
 
